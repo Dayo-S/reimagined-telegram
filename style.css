@@ -1,0 +1,192 @@
+/* ======================================================================
+   style.css — Banned Book Club one‑page site
+   Warm/classic earth‑tone palette, responsive, keyboard accessible.
+   ====================================================================== */
+
+:root {
+  /* Light theme defaults (earth tones) */
+  --bg: #fdf6f0;
+  --bg-accent: #ffe4c5;
+  --fg: #2d2a25;
+  --muted: #6b6a65;
+  --accent: #8b5a2b;     /* warm brown */
+  --accent-hover: #6b451a;
+  --link: #6b3f2a;
+  --success: #3b4c3b;
+
+  /* CSS colour-theme switcher: we toggle a class on <body> */
+  --theme: light;
+}
+
+/* Dark & Sepia themes are toggled via body classes */
+body.sepia {
+  --bg: #fdf6e3;
+  --bg-accent: #ffe8c5;
+  --fg: #3d3a34;
+  --muted: #7a7873;
+  --accent: #a06a3d;
+  --accent-hover: #805a35;
+  --link: #7a5a45;
+  --success: #4a5d4a;
+}
+
+body.dark {
+  --bg: #1e1e1e;
+  --bg-accent: #2d2d2d;
+  --fg: #e8e8e8;
+  --muted: #a0a0a0;
+  --accent: #d4a853;
+  --accent-hover: #c29848;
+  --link: #ffd8a6;
+  --success: #5a7a5a;
+}
+
+/* ---- Base & typography ---- */
+
+html {
+  box-sizing: border-box;
+  font-family: Georgia, "Baskerville", "Times New Roman", serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+*, *::before, *::after { box-sizing: inherit; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  transition: background .3s, color .3s;
+}
+
+/* ---- Layout ---- */
+
+.wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  margin: .5em 0 0;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  color: var(--fg);
+  line-height: 1.2;
+}
+
+header p {
+  color: var(--muted);
+  margin: .3em 0 0;
+  font-size: clamp(1rem, 3vw, 1.2rem);
+}
+
+/* Theme switch button */
+.theme-switch {
+  margin-top: .5em;
+  padding: .4em .8em;
+  font-family: inherit;
+  font-size: .95rem;
+  cursor: pointer;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  border-radius: 4px;
+  transition: background .2s, color .2s;
+}
+
+.theme-switch:hover,
+.theme-switch:focus-visible {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.theme-switch:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+}
+
+/* Main content */
+main {
+  display: grid;
+  gap: 2rem;
+}
+
+/* Intro section */
+.intro h2 {
+  margin: 0 0 .5em;
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  color: var(--fg);
+}
+
+.intro p {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* Themes section */
+.themes h2 {
+  margin: 0 0 .75em;
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  color: var(--fg);
+}
+
+.themes ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--muted);
+}
+
+.themes li {
+  margin-bottom: .4em;
+}
+
+/* ---- Responsive grid ---- */
+
+/* Narrow: single column (default) */
+@media (min-width: 600px) {
+  .themes ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+/* Wide: optional three‑column feel, but we keep 2 for readability */
+@media (min-width: 900px) {
+  .themes ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ---- Colour-theme overrides (body class) ---- */
+
+/* Light is default — nothing extra needed */
+
+/* Dark theme */
+body.dark a { color: var(--link); }
+
+/* Sepia theme */
+body.sepia a { color: #7a5a45; }
+
+/* ---- Skip link (keyboard) ---- */
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: var(--accent);
+  color: var(--bg);
+  padding: .5em;
+  z-index: 9999;
+  transition: top .2s;
+}
+
+.skip-link:focus {
+  top: 0;
+}

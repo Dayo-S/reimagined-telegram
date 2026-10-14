@@ -1,0 +1,4 @@
+# Ignore environment and runtime artifacts
+.env
+node_modules/
+.DS_Store
