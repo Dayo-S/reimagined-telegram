@@ -1,6 +1,7 @@
 /* ======================================================================
    style.css — Banned Book Club one‑page site
-   Warm/classic earth‑tone palette, responsive, keyboard accessible.
+   Warm/classic earth‑tone palette with subtle leafy decorative accents.
+   Responsive, keyboard accessible, no dependencies.
    ====================================================================== */
 
 :root {
@@ -13,9 +14,24 @@
   --accent-hover: #6b451a;
   --link: #6b3f2a;
   --success: #3b4c3b;
+}
 
-  /* CSS colour-theme switcher: we toggle a class on <body> */
-  --theme: light;
+/* ── Subtle parchment‑like background (light theme) ─────────────────────── */
+body.light {
+  background:
+    /* horizontal light‑shadow stripe */
+    linear-gradient(180deg, var(--bg) 0 1px, transparent 1px 100%),
+    /* small concentric circles suggesting paper grain */
+    radial-gradient(at 0% 0, #fdf6f0 0, transparent 50%),
+    radial-gradient(at 100% 0, #fdf6f0 0, transparent 50%),
+    radial-gradient(at 0% 100%, #fdf6f0 0, transparent 50%),
+    radial-gradient(at 100% 100%, #fdf6f0 0, transparent 50%);
+  background-size:
+    100% 1px,
+    20ch 20ch,
+    20ch 20ch,
+    20ch 20ch,
+    20ch 20ch;
 }
 
 /* Dark & Sepia themes are toggled via body classes */
@@ -41,7 +57,42 @@ body.dark {
   --success: #5a7a5a;
 }
 
-/* ---- Base & typography ---- */
+/* ── Leaf‑emoji decorative elements ─────────────────────────────────────── */
+.leaf { display: inline-block; margin-left: .1em; margin-right: .1em; }
+.leaf:before { content: "🍃"; font-size: .85em; }
+.leaf-sm:before { content: "🍂"; font-size: .7em; }
+
+/* Leaf garland at top of header */
+header::before {
+  content: "🍃 🍂 🍃 🍂 🍃 🍂 🍃 🍂";
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: .75rem;
+  color: var(--muted);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Leaf icons before section headings */
+.intro h2,
+.themes h2 {
+  position: relative;
+  padding-left: 1.6rem;
+}
+.intro h2::before,
+.themes h2::before {
+  content: "🍃";
+  position: absolute;
+  left: 0;
+  top: .1em;
+  font-size: .9em;
+  color: var(--accent);
+  line-height: 1;
+}
+
+/* ── Base & typography ── */
 
 html {
   box-sizing: border-box;
@@ -59,18 +110,26 @@ body {
   transition: background .3s, color .3s;
 }
 
-/* ---- Layout ---- */
+/* ── Layout ── */
 
 .wrapper {
   max-width: 800px;
   margin: 0 auto;
   padding: 1.5rem;
+  /* soft organic shape */
+  border-radius: 1rem;
+  background: var(--bg);
+  /* subtle drop‑shadow */
+  box-shadow: 0 .5rem 1.5rem rgba(0,0,0,.08);
 }
 
 /* Header */
 header {
   text-align: center;
   margin-bottom: 2rem;
+  /* keep header above the leaf garland */
+  position: relative;
+  z-index: 2;
 }
 
 header h1 {
@@ -146,7 +205,7 @@ main {
   margin-bottom: .4em;
 }
 
-/* ---- Responsive grid ---- */
+/* ── Responsive grid ── */
 
 /* Narrow: single column (default) */
 @media (min-width: 600px) {
@@ -164,7 +223,7 @@ main {
   }
 }
 
-/* ---- Colour-theme overrides (body class) ---- */
+/* ── Colour-theme overrides (body class) ── */
 
 /* Light is default — nothing extra needed */
 
@@ -174,7 +233,7 @@ body.dark a { color: var(--link); }
 /* Sepia theme */
 body.sepia a { color: #7a5a45; }
 
-/* ---- Skip link (keyboard) ---- */
+/* ── Skip link (keyboard) ── */
 
 .skip-link {
   position: absolute;
