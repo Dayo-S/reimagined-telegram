@@ -1,70 +1,116 @@
 /* ======================================================================
-   script.js — Tiny theme switcher for the Banned Book Club site.
-   Toggles light / dark / sepia on <body>, persists in localStorage,
-   and honours the prefers-color-scheme media query on first load.
+   script.js — Banned Book Club one‑page site
+   Theme switcher + slide‑out Animal Crossing‑style menu.
+   Persists theme in localStorage, honours prefers-color-scheme.
    ====================================================================== */
 
 (function () {
-  const button = document.querySelector('.theme-switch');
-  if (!button) return;
+  // ----- Theme switcher -----
+  (function () {
+    const button = document.querySelector('.theme-switch');
+    if (!button) return;
 
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const prefersSepia = window.matchMedia('(prefers-color-scheme: light)').matches; // we use sepia as a separate choice
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  // Determine initial theme from localStorage or system preference
-  let stored = localStorage.getItem('book-club-theme');
-  if (stored) {
-    document.body.classList.add(stored);
-    updateButton(stored);
-  } else if (prefersDark) {
-    // default to dark if user prefers dark & no stored preference
-    document.body.classList.add('dark');
-    localStorage.setItem('book-club-theme', 'dark');
-    updateButton('dark');
-  } else {
-    // light is default (no class needed)
-    localStorage.setItem('book-club-theme', 'light');
-    updateButton('light');
-  }
-
-  // Cycle: light → dark → sepia → light
-  const cycle = ['light', 'dark', 'sepia'];
-
-  button.addEventListener('click', function () {
-    const current = document.body.classList.value
-      .split(' ')
-      .find(c => c === 'dark' || c === 'sepia' || c === 'light');
-
-    let nextIndex;
-    if (!current) {
-      // no theme class — start at light (index 0) → next = dark (index 1)
-      nextIndex = 1;
+    let stored = localStorage.getItem('book-club-theme');
+    if (stored) {
+      document.body.classList.add(stored);
+      updateButton(stored);
+    } else if (prefersDark) {
+      document.body.classList.add('dark');
+      localStorage.setItem('book-club-theme', 'dark');
+      updateButton('dark');
     } else {
-      const currentIdx = cycle.indexOf(current);
-      nextIndex = (currentIdx + 1) % cycle.length;
+      localStorage.setItem('book-club-theme', 'light');
+      updateButton('light');
     }
 
-    const nextTheme = cycle[nextIndex];
+    const cycle = ['light', 'dark', 'sepia'];
 
-    // Remove old theme classes, add new one
-    document.body.classList.remove('light', 'dark', 'sepia');
-    document.body.classList.add(nextTheme);
+    button.addEventListener('click', function () {
+      const current = document.body.classList.value
+        .split(' ')
+        .find(c => c === 'dark' || c === 'sepia' || c === 'light');
 
-    // Persist
-    localStorage.setItem('book-club-theme', nextTheme);
-    updateButton(nextTheme);
-  });
+      let nextIndex;
+      if (!current) { nextIndex = 1; }
+      else {
+        const currentIdx = cycle.indexOf(current);
+        nextIndex = (currentIdx + 1) % cycle.length;
+      }
 
-  function updateButton(themeKey) {
-    const texts = {
-      light: 'Light',
-      dark: 'Dark',
-      sepia: 'Sepia',
-    };
-    const label = texts[themeKey] || 'Light';
-    // aria-pressed is true when the current theme is not light (i.e. a change is active)
-    const isPressed = themeKey !== 'light';
-    button.setAttribute('aria-pressed', isPressed);
-    button.textContent = `Theme: ${label}`;
-  }
+      const nextTheme = cycle[nextIndex];
+      document.body.classList.remove('light', 'dark', 'sepia');
+      document.body.classList.add(nextTheme);
+      localStorage.setItem('book-club-theme', nextTheme);
+      updateButton(nextTheme);
+    });
+
+    function updateButton(themeKey) {
+      const texts = { light: 'Light', dark: 'Dark', sepia: 'Sepia' };
+      const label = texts[themeKey] || 'Light';
+      const isPressed = themeKey !== 'light';
+      button.setAttribute('aria-pressed', isPressed);
+      button.textContent = `Theme: ${label}`;
+    }
+  })();
+
+  // ----- Slide‑out menu -----
+  (function () {
+    const burger = document.querySelector('.burger-menu');
+    const menu = document.querySelector('.slide-menu');
+    const closeBtn = document.querySelector('.close-menu');
+    const skipLink = document.querySelector('.skip-link');
+
+    if (!burger || !menu) return;
+
+    // Open / close
+    function openMenu() {
+      burger.classList.add('open');
+      menu.classList.add('open');
+      // keep focus inside menu by focusing first focusable element
+      const firstFocusable = menu.querySelector('a, button');
+      if (firstFocusable) firstFocusable.focus();
+      // aria
+      burger.setAttribute('aria-expanded', 'true');
+      menu.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeMenu() {
+      burger.classList.remove('open');
+      menu.classList.remove('open');
+      // return focus to burger
+      burger.focus();
+      burger.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+    }
+
+    burger.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
+
+    // Click outside menu to close
+    document.addEventListener('click', function (e) {
+      if (e.target === burger || e.target === closeBtn) {
+        if (menu.classList.contains('open')) closeMenu();
+        else openMenu();
+      }
+    });
+
+    // Keyboard: Escape closes menu
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menu.classList.contains('open')) {
+        closeMenu();
+      }
+    });
+
+    // Close menu when a link is clicked (mobile UX)
+    const links = menu.querySelectorAll('a');
+    links.forEach(function (link) {
+      link.addEventListener('click', function () {
+        closeMenu();
+      });
+    });
+
+    // Optional: focus trap logic could be added here for full accessibility
+  })();
 })();

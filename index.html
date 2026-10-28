@@ -3,34 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Banned Book Club — Themes</title>
+  <title>Banned Book Club</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="wrapper">
-    <h1>Banned Book Club</h1>
-    <p>Reading forbidden stories, discussing freedom</p>
+  <!-- Skip link for keyboard navigation -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- Header with cream background -->
+  <header class="wrapper" id="header">
+    <button class="burger-menu" aria-label="Open menu" aria-expanded="false" role="button">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
     <button class="theme-switch" aria-label="Switch color theme" aria-pressed="false">
       Theme: Light
     </button>
+
+    <h1>📖 Banned Book Club</h1>
+    <p class="tagline">A student reading group exploring forbidden stories</p>
   </header>
 
-  <main class="wrapper">
+  <!-- Slide-out menu (hidden by default, appears over content) -->
+  <nav class="slide-menu" aria-label="Main navigation" role="navigation">
+    <h2>📚 Reading List</h2>
+    <ul>
+      <li>
+        <a href="#" class="book-item">
+          <strong>The Great Gatsby</strong>
+          <span class="author">F. Scott Fitzgerald</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="book-item">
+          <strong>1984</strong>
+          <span class="author">George Orwell</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="book-item">
+          <strong>To Kill a Mockingbird</strong>
+          <span class="author">Harper Lee</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="book-item">
+          <strong>One Hundred Years of Solitude</strong>
+          <span class="author">Gabriel García Márquez</span>
+        </a>
+      </li>
+    </ul>
+    <button class="close-menu" aria-label="Close menu" hidden>
+      ✕
+    </button>
+  </nav>
+
+  <main id="main">
     <section class="intro">
-      <h2>Welcome</h2>
+      <h2>✨ Welcome</h2>
       <p>
-        We are a group of students who read banned books — stories that have been challenged, restricted, or removed from libraries and classrooms. Each meeting we explore the themes that make these books targets, talk about why censorship matters, and share what the stories give us.
+        We are a group of students who meet weekly to read and discuss books that have been challenged, restricted, or removed from libraries and classrooms. Each session we dive into the themes that make these books targets, talk about why censorship matters, and share what the stories give us.
       </p>
     </section>
 
     <section class="themes">
-      <h2>Core Themes</h2>
+      <h2>🌿 Core Themes</h2>
       <ul>
         <li><strong>Censorship & Freedom</strong> — How books become “banned” and what we lose when stories are silenced.</li>
         <li><strong>Diversity & Representation</strong> — Voices that have been muted, and why seeing ourselves in stories matters.</li>
         <li><strong>Identity & Belonging</strong> — The ways challenged books tackle race, gender, sexuality, and class.</li>
       </ul>
+      <details>
+        <summary>Join the conversation</summary>
+        <p>Meetings are held every Thursday at 4 PM in the student lounge. All are welcome — no prior reading required. Just bring curiosity and an open mind.</p>
+      </details>
     </section>
   </main>
 

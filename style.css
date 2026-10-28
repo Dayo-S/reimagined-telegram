@@ -1,213 +1,390 @@
 /* ======================================================================
-   style.css — Banned Book Club one‑page site
-   Warm/classic earth‑tone palette with subtle leafy decorative accents.
-   Responsive, keyboard accessible, no dependencies.
+   style.css — Banned Book Club
+   Gen-Z Pinterest aesthetic: sage green, lavender, cream, terracotta.
+   Dark text (not pink), elegant serif headings, clean sans-serif body.
+   Flat design, soft rounded corners, UI/UX best practices.
+   No dependencies, no CDN.
    ====================================================================== */
 
+/* ── Gen-Z Pinterest palette ──────────────────────────────────────────── */
 :root {
-  /* Light theme defaults (earth tones) */
-  --bg: #fdf6f0;
-  --bg-accent: #ffe4c5;
-  --fg: #2d2a25;
-  --muted: #6b6a65;
-  --accent: #8b5a2b;     /* warm brown */
-  --accent-hover: #6b451a;
-  --link: #6b3f2a;
-  --success: #3b4c3b;
+  /* Base – warm cream, easy on the eyes */
+  --cream: #f5efe6;
+  --cream-accent: #efe6d8;
+  --cream-deep: #e8e0d0;
+
+  /* Accent colors – Pinterest Gen-Z favorites */
+  --sage: #9caf88;
+  --sage-light: #c5d4b8;
+  --sage-dark: #7a8f6a;
+  --lavender: #b4a7d6;
+  --lavender-light: #d4cfe8;
+  --lavender-dark: #8a7ab0;
+  --terracotta: #d4a373;
+  --terracotta-light: #e8c9a8;
+  --terracotta-dark: #b8895a;
+  --dusty-rose: #d4a5a5;
+  --dusty-rose-light: #e8c4c4;
+
+  /* Text – dark, readable, NOT pink */
+  --text-primary: #2d2d2d;
+  --text-secondary: #5a5a5a;
+  --text-muted: #8a8a8a;
+
+  /* UI elements */
+  --border: #e0ddd5;
+  --card-bg: #ffffff;
+  --hover-bg: #f0ebe3;
+  --focus-ring: #9caf88;
 }
 
-/* ── Subtle parchment‑like background (light theme) ─────────────────────── */
-body.light {
-  background:
-    /* horizontal light‑shadow stripe */
-    linear-gradient(180deg, var(--bg) 0 1px, transparent 1px 100%),
-    /* small concentric circles suggesting paper grain */
-    radial-gradient(at 0% 0, #fdf6f0 0, transparent 50%),
-    radial-gradient(at 100% 0, #fdf6f0 0, transparent 50%),
-    radial-gradient(at 0% 100%, #fdf6f0 0, transparent 50%),
-    radial-gradient(at 100% 100%, #fdf6f0 0, transparent 50%);
-  background-size:
-    100% 1px,
-    20ch 20ch,
-    20ch 20ch,
-    20ch 20ch,
-    20ch 20ch;
-}
-
-/* Dark & Sepia themes are toggled via body classes */
-body.sepia {
-  --bg: #fdf6e3;
-  --bg-accent: #ffe8c5;
-  --fg: #3d3a34;
-  --muted: #7a7873;
-  --accent: #a06a3d;
-  --accent-hover: #805a35;
-  --link: #7a5a45;
-  --success: #4a5d4a;
-}
-
-body.dark {
-  --bg: #1e1e1e;
-  --bg-accent: #2d2d2d;
-  --fg: #e8e8e8;
-  --muted: #a0a0a0;
-  --accent: #d4a853;
-  --accent-hover: #c29848;
-  --link: #ffd8a6;
-  --success: #5a7a5a;
-}
-
-/* ── Leaf‑emoji decorative elements ─────────────────────────────────────── */
-.leaf { display: inline-block; margin-left: .1em; margin-right: .1em; }
-.leaf:before { content: "🍃"; font-size: .85em; }
-.leaf-sm:before { content: "🍂"; font-size: .7em; }
-
-/* Leaf garland at top of header */
-header::before {
-  content: "🍃 🍂 🍃 🍂 🍃 🍂 🍃 🍂";
-  position: absolute;
-  top: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: .75rem;
-  color: var(--muted);
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Leaf icons before section headings */
-.intro h2,
-.themes h2 {
-  position: relative;
-  padding-left: 1.6rem;
-}
-.intro h2::before,
-.themes h2::before {
-  content: "🍃";
-  position: absolute;
-  left: 0;
-  top: .1em;
-  font-size: .9em;
-  color: var(--accent);
-  line-height: 1;
-}
-
-/* ── Base & typography ── */
-
+/* ── Body & base ─────────────────────────────────────────────────────── */
 html {
   box-sizing: border-box;
-  font-family: Georgia, "Baskerville", "Times New Roman", serif;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
   font-size: 16px;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 *, *::before, *::after { box-sizing: inherit; }
 
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--fg);
+  background: var(--cream);
+  color: var(--text-primary);
   transition: background .3s, color .3s;
 }
 
-/* ── Layout ── */
-
-.wrapper {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 1.5rem;
-  /* soft organic shape */
-  border-radius: 1rem;
-  background: var(--bg);
-  /* subtle drop‑shadow */
-  box-shadow: 0 .5rem 1.5rem rgba(0,0,0,.08);
+/* ── Typography hierarchy ─────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--text-primary);
+  margin-top: 0;
 }
 
-/* Header */
+h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+p {
+  margin: 0 0 1rem;
+  color: var(--text-secondary);
+}
+
+/* ── Layout wrapper ────────────────────────────────────────────────────── */
+.wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+/* ── Wreath-like border along margins — REMOVED per request ───────────── */
+/* (side borders removed; warm background kept) */
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
 header {
   text-align: center;
   margin-bottom: 2rem;
-  /* keep header above the leaf garland */
   position: relative;
   z-index: 2;
+  padding: 2rem 1rem;
 }
 
 header h1 {
-  margin: .5em 0 0;
-  font-size: clamp(1.8rem, 5vw, 2.8rem);
-  color: var(--fg);
-  line-height: 1.2;
+  margin: 0.5em 0 0;
+  display: inline-block;
+  padding: 0.3em 0.6em;
+  border-bottom: 3px solid var(--sage);
+  transition: border-color .3s;
 }
 
-header p {
-  color: var(--muted);
-  margin: .3em 0 0;
-  font-size: clamp(1rem, 3vw, 1.2rem);
+header h1:hover {
+  border-color: var(--lavender);
 }
 
-/* Theme switch button */
-.theme-switch {
-  margin-top: .5em;
-  padding: .4em .8em;
-  font-family: inherit;
-  font-size: .95rem;
+header .tagline {
+  color: var(--text-muted);
+  font-size: clamp(1rem, 3vw, 1.15rem);
+  margin: 0.5rem 0 0;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+/* ── Burger menu button ────────────────────────────────────────────────── */
+.burger-menu {
+  position: absolute;
+  left: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.75rem;
+  height: 2.75rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
   cursor: pointer;
-  border: 1px solid var(--accent);
+  z-index: 3;
+  padding: 0;
+  transition: background .2s, border-color .2s, box-shadow .2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.burger-menu:hover,
+.burger-menu:focus-visible {
+  background: var(--hover-bg);
+  border-color: var(--sage);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.burger-menu span {
+  display: block;
+  position: absolute;
+  left: 0.625rem;
+  width: 1.5rem;
+  height: 2px;
+  background: var(--text-secondary);
+  border-radius: 2px;
+  transition: background .2s;
+}
+
+.burger-menu:hover span,
+.burger-menu:focus-visible span {
+  background: var(--text-primary);
+}
+
+.burger-menu.open span {
   background: transparent;
-  color: var(--accent);
-  border-radius: 4px;
-  transition: background .2s, color .2s;
+}
+
+.burger-menu.open span::before,
+.burger-menu.open span::after {
+  content: "";
+  position: absolute;
+  left: 0.625rem;
+  width: 1.5rem;
+  height: 2px;
+  background: var(--text-secondary);
+  border-radius: 2px;
+  transition: transform .3s cubic-bezier(.23, 1, .32, 1);
+}
+
+.burger-menu.open span::before { top: 0; transform: rotate(45deg); }
+.burger-menu.open span::after { bottom: 0; transform: rotate(-45deg); }
+
+/* ── Theme switch button ────────────────────────────────────────────────── */
+.theme-switch {
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0.5rem 0.875rem;
+  font-size: 0.875rem;
+  font-family: inherit;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background .2s, border-color .2s, color .2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
 
 .theme-switch:hover,
 .theme-switch:focus-visible {
-  background: var(--accent);
-  color: var(--bg);
+  background: var(--hover-bg);
+  border-color: var(--sage);
+  color: var(--text-primary);
 }
 
-.theme-switch:focus-visible {
-  outline: 2px solid var(--fg);
-  outline-offset: 2px;
+/* ── Slide-out menu ─────────────────────────────────────────────────────── */
+.slide-menu {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  bottom: 0;
+  width: 280px;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  z-index: 10;
+  transition: left .3s cubic-bezier(.23, 1, .32, 1);
+  padding: 2rem 1.5rem 1.5rem;
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  box-shadow: 2px 0 12px rgba(0,0,0,0.06);
 }
 
-/* Main content */
+.slide-menu.open {
+  left: 0;
+}
+
+.slide-menu h2 {
+  margin: 0 0 1rem;
+  font-size: 1.125rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.slide-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.slide-menu li {
+  margin: 0.5rem 0;
+}
+
+.slide-menu a {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  display: block;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background: transparent;
+  transition: background .15s, color .15s;
+}
+
+.slide-menu a:hover,
+.slide-menu a:focus-visible {
+  background: var(--hover-bg);
+  color: var(--text-primary);
+}
+
+.close-menu {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  line-height: 1;
+  transition: background .15s, color .15s;
+}
+
+.close-menu:hover,
+.close-menu:focus-visible {
+  background: var(--hover-bg);
+  color: var(--text-primary);
+}
+
+/* ── Main content ──────────────────────────────────────────────────────── */
 main {
   display: grid;
   gap: 2rem;
 }
 
-/* Intro section */
-.intro h2 {
-  margin: 0 0 .5em;
-  font-size: clamp(1.4rem, 4vw, 2rem);
-  color: var(--fg);
+section {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  transition: box-shadow .2s;
 }
 
-.intro p {
-  margin: 0;
-  color: var(--muted);
+section:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
-/* Themes section */
+.intro h2,
 .themes h2 {
-  margin: 0 0 .75em;
-  font-size: clamp(1.4rem, 4vw, 2rem);
-  color: var(--fg);
+  margin: 0 0 0.5rem;
+  color: var(--text-primary);
+  position: relative;
+  padding-left: 0;
+}
+
+/* Decorative accent line under headings */
+.intro h2::after,
+.themes h2::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 3px;
+  background: var(--sage);
+  border-radius: 2px;
+  margin-top: 0.5rem;
+}
+
+.themes h2::after {
+  background: var(--lavender);
+}
+
+.intro p,
+.themes p {
+  color: var(--text-secondary);
+  line-height: 1.6;
 }
 
 .themes ul {
   margin: 0;
-  padding-left: 1.2rem;
-  color: var(--muted);
+  padding-left: 1.25rem;
+  color: var(--text-secondary);
 }
 
 .themes li {
-  margin-bottom: .4em;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
 }
 
-/* ── Responsive grid ── */
+.themes li strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
 
-/* Narrow: single column (default) */
+/* Details expandable section */
+.themes details {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  margin-bottom: 0.5rem;
+}
+
+.themes summary {
+  cursor: pointer;
+  user-select: none;
+  font-weight: 500;
+  color: var(--text-primary);
+  padding: 0.5rem 0;
+  transition: color .2s;
+}
+
+.themes summary:hover {
+  color: var(--sage-dark);
+}
+
+.themes details[open] summary {
+  margin-bottom: 0.5rem;
+}
+
+/* ── Responsive grid ───────────────────────────────────────────────────── */
 @media (min-width: 600px) {
   .themes ul {
     display: grid;
@@ -216,36 +393,36 @@ main {
   }
 }
 
-/* Wide: optional three‑column feel, but we keep 2 for readability */
 @media (min-width: 900px) {
   .themes ul {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* ── Colour-theme overrides (body class) ── */
-
-/* Light is default — nothing extra needed */
-
-/* Dark theme */
-body.dark a { color: var(--link); }
-
-/* Sepia theme */
-body.sepia a { color: #7a5a45; }
-
-/* ── Skip link (keyboard) ── */
-
+/* ── Skip link ──────────────────────────────────────────────────────────── */
 .skip-link {
   position: absolute;
-  top: -100px;
+  top: -99px;
   left: 0;
-  background: var(--accent);
-  color: var(--bg);
-  padding: .5em;
+  background: var(--text-primary);
+  color: var(--cream);
+  padding: 0.6em 1em;
   z-index: 9999;
-  transition: top .2s;
+  font-size: 0.9rem;
+  transition: top .15s ease;
+  border-radius: 0 0 0.5rem 0.5rem;
+  margin: 1rem;
 }
 
 .skip-link:focus {
   top: 0;
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
